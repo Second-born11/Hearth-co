@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hearth & Co. — Headless E-commerce Demo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,900;1,600&family=DM+Sans:wght@300;400;500;600&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!--NAVBAR-->
+  <nav id="navbar">
+    <div class="nav-inner">
+      <button class="logo" data-page="store">
+        <span class="logo-icon">🌿</span>
+        <span class="logo-text">Hearth <em>&</em> Co.</span>
+      </button>
+      <div class="nav-links">
+        <button data-page="store" class="nav-btn active">Store</button>
+        <button data-page="architecture" class="nav-btn">Architecture</button>
+        <button data-page="features" class="nav-btn">Features</button>
+        <button data-page="wishlist" class="nav-btn">Wishlist <span id="wishlist-badge" class="badge hidden">0</span></button>
+        <button data-page="admin" class="nav-btn">Admin</button>
+      </div>
+      <button id="cart-toggle" class="cart-btn">
+        <span>🛒</span> Cart
+        <span id="cart-badge" class="badge hidden">0</span>
+      </button>
+      <button class="hamburger" id="hamburger">☰</button>
+    </div>
+    <div class="mobile-menu hidden" id="mobile-menu">
+      <button data-page="store" class="mobile-nav-btn">Store</button>
+      <button data-page="architecture" class="mobile-nav-btn">Architecture</button>
+      <button data-page="features" class="mobile-nav-btn">Features</button>
+      <button data-page="wishlist" class="mobile-nav-btn">Wishlist</button>
+      <button data-page="admin" class="mobile-nav-btn">Admin</button>
+    </div>
+  </nav>
+
+  <!--PAGES-->
+  <main id="app">
+
+    <!-- STORE PAGE -->
+    <section id="page-store" class="page active">
+      <!-- Hero -->
+      <div class="hero">
+        <div class="hero-bg-circle c1"></div>
+        <div class="hero-bg-circle c2"></div>
+        <div class="hero-content">
+          <span class="hero-badge">Headless E-commerce Demo</span>
+          <h1 class="hero-title">React + Shopify<br>Storefront API</h1>
+          <p class="hero-sub">A fully functional headless storefront demonstrating modern e-commerce architecture — decoupled frontend, GraphQL data layer, and Shopify as the commerce engine.</p>
+          <div class="hero-ctas">
+            <button class="btn-primary" data-page="store" id="browse-btn">Browse the Store →</button>
+            <button class="btn-outline" data-page="architecture">View Architecture</button>
+          </div>
+          <div class="hero-stats">
+            <div class="stat"><span class="stat-val">8</span><span class="stat-label">Products</span></div>
+            <div class="stat"><span class="stat-val">3</span><span class="stat-label">Collections</span></div>
+            <div class="stat"><span class="stat-val">GraphQL</span><span class="stat-label">API Layer</span></div>
+            <div class="stat"><span class="stat-val">&lt;200ms</span><span class="stat-label">Page Load</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Store Controls -->
+      <div class="store-wrap">
+        <div class="store-header">
+          <div>
+            <h2 class="section-title">Shop the Collection</h2>
+            <p class="section-sub">Powered by Shopify Storefront API · 8 products</p>
+          </div>
+        </div>
+        <div class="store-controls">
+          <div class="category-pills" id="category-pills"></div>
+          <div class="store-search-sort">
+            <input type="text" id="search-input" class="search-input" placeholder="Search products…" />
+            <select id="sort-select" class="sort-select">
+              <option value="default">Sort: Default</option>
+              <option value="price-asc">Price: Low → High</option>
+              <option value="price-desc">Price: High → Low</option>
+              <option value="name">Name A–Z</option>
+            </select>
+          </div>
+        </div>
+        <div class="product-grid" id="product-grid"></div>
+        <div class="empty-state hidden" id="empty-state">No products match your search.</div>
+      </div>
+    </section>
+
+    <!-- ARCHITECTURE PAGE -->
+    <section id="page-architecture" class="page">
+      <div class="inner-wrap">
+        <div class="page-header">
+          <h2 class="section-title">Architecture Diagram</h2>
+          <p class="section-sub">Click any node to learn more about each layer</p>
+        </div>
+        <div class="arch-grid">
+          <div class="arch-diagram-wrap">
+            <svg id="arch-svg" viewBox="0 0 300 320" xmlns="http://www.w3.org/2000/svg"></svg>
+          </div>
+          <div class="arch-info-col">
+            <div id="arch-detail" class="arch-detail-box">
+              <div class="arch-detail-empty">
+                <span class="arch-detail-icon">👆</span>
+                <p>Click a node in the diagram to see details about that layer</p>
+              </div>
+            </div>
+            <div class="tech-stack-card">
+              <h4 class="card-title">Tech Stack</h4>
+              <div id="tech-stack-list"></div>
+            </div>
+            <div class="code-card">
+              <div class="code-header">
+                <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+                <span class="code-filename">storefront.graphql</span>
+              </div>
+              <pre class="code-block" id="gql-snippet"></pre>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FEATURES PAGE -->
+    <section id="page-features" class="page">
+      <div class="inner-wrap">
+        <div class="page-header center">
+          <h2 class="section-title">Why Headless Commerce?</h2>
+          <p class="section-sub">Decouple your storefront from your backend and unlock performance, flexibility, and design freedom.</p>
+        </div>
+        <div class="features-grid" id="features-grid"></div>
+        <div class="comparison-table-wrap">
+          <h3 class="card-title" style="margin-bottom:20px">Headless vs. Traditional Shopify</h3>
+          <div class="table-scroll">
+            <table class="comparison-table" id="comparison-table"></table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- WISHLIST PAGE -->
+    <section id="page-wishlist" class="page">
+      <div class="inner-wrap">
+        <div class="page-header">
+          <h2 class="section-title">Your Wishlist</h2>
+          <p class="section-sub">Save items for later — your wishlist persists in localStorage</p>
+        </div>
+        <div id="wishlist-grid" class="product-grid"></div>
+        <div id="wishlist-empty" class="empty-hero hidden">
+          <span class="empty-icon">🤍</span>
+          <h3>Your wishlist is empty</h3>
+          <p>Browse the store and click the heart icon to save items.</p>
+          <button class="btn-primary" data-page="store">Browse Store →</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ADMIN PAGE -->
+    <section id="page-admin" class="page">
+      <div class="inner-wrap">
+        <div class="page-header">
+          <h2 class="section-title">Admin Dashboard</h2>
+          <p class="section-sub">Simulated Shopify Admin interface · demo data only</p>
+        </div>
+        <div class="admin-stats" id="admin-stats"></div>
+        <div class="admin-tabs">
+          <button class="tab-btn active" data-tab="products">Products</button>
+          <button class="tab-btn" data-tab="orders">Orders</button>
+          <button class="tab-btn" data-tab="analytics">Analytics</button>
+          <button class="tab-btn" data-tab="discounts">Discounts</button>
+          <button class="tab-btn" data-tab="customers">Customers</button>
+        </div>
+        <div id="tab-products" class="tab-panel active"></div>
+        <div id="tab-orders" class="tab-panel hidden"></div>
+        <div id="tab-analytics" class="tab-panel hidden"></div>
+        <div id="tab-discounts" class="tab-panel hidden"></div>
+        <div id="tab-customers" class="tab-panel hidden"></div>
+      </div>
+    </section>
+
+  </main>
+
+  <!--CART DRAWER-->
+  <div id="cart-overlay" class="overlay hidden"></div>
+  <aside id="cart-drawer" class="drawer">
+    <div class="drawer-header">
+      <div>
+        <h3 class="drawer-title">Your Cart</h3>
+        <p id="cart-count-label" class="drawer-sub">0 items</p>
+      </div>
+      <button id="cart-close" class="close-btn">×</button>
+    </div>
+    <div id="cart-items" class="drawer-body"></div>
+    <div id="cart-footer" class="drawer-footer hidden">
+      <div class="cart-summary">
+        <span class="summary-label">Subtotal</span>
+        <span id="cart-total" class="summary-val">$0.00</span>
+      </div>
+      <p class="cart-note">Shipping & taxes calculated at checkout</p>
+      <button id="checkout-btn" class="btn-primary full-width">Proceed to Checkout →</button>
+      <button id="clear-cart-btn" class="btn-ghost full-width">Clear cart</button>
+    </div>
+    <div id="cart-empty" class="cart-empty">
+      <span class="empty-icon">🛒</span>
+      <p>Your cart is empty</p>
+    </div>
+  </aside>
+
+  <!--CHECKOUT MODAL-->
+  <div id="checkout-overlay" class="overlay hidden"></div>
+  <div id="checkout-modal" class="modal hidden">
+    <button class="modal-close" id="checkout-close">×</button>
+    <div id="checkout-content"></div>
+  </div>
+
+  <!-- ░░ PRODUCT DETAIL MODAL ░░ -->
+  <div id="product-overlay" class="overlay hidden"></div>
+  <div id="product-modal" class="modal hidden">
+    <button class="modal-close" id="product-close">×</button>
+    <div id="product-detail-content"></div>
+  </div>
+
+  <!-- ░░ EDIT PRODUCT MODAL (Admin) ░░ -->
+  <div id="edit-overlay" class="overlay hidden"></div>
+  <div id="edit-modal" class="modal hidden">
+    <button class="modal-close" id="edit-close">×</button>
+    <div id="edit-content"></div>
+  </div>
+
+  <!-- ░░ TOAST ░░ -->
+  <div id="toast" class="toast hidden"></div>
+
+  <!-- ░░ FOOTER ░░ -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="footer-logo">🌿 Hearth & Co.</div>
+        <p>A headless e-commerce demo built with React and the Shopify Storefront API. Not a real store.</p>
+      </div>
+      <div class="footer-links">
+        <div class="footer-col">
+          <h5>Navigate</h5>
+          <button data-page="store">Store</button>
+          <button data-page="architecture">Architecture</button>
+          <button data-page="features">Features</button>
+          <button data-page="wishlist">Wishlist</button>
+          <button data-page="admin">Admin</button>
+        </div>
+        <div class="footer-col">
+          <h5>Stack</h5>
+          <span>React 18</span>
+          <span>Shopify Storefront API</span>
+          <span>GraphQL</span>
+          <span>Vite + Vercel</span>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Hearth & Co. Demo. All products are fictional.</span>
+      <span>Built with React + Shopify Storefront API</span>
+    </div>
+  </footer>
+
+  <!-- Scripts (order matters) -->
+  <script src="js/data.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/wishlist.js"></script>
+  <script src="js/store.js"></script>
+  <script src="js/architecture.js"></script>
+  <script src="js/features.js"></script>
+  <script src="js/admin.js"></script>
+  <script src="js/checkout.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
