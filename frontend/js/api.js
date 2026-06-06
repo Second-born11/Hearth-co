@@ -4,7 +4,7 @@
    server instances running on port 3001.
    ════════════════════════════════════════════════ */
 window.API = (() => {
-  const BASE_URL = "https://hearth-co.onrender.com";
+  const BASE_URL = "https://hearth-co.onrender.com/api";
   let adminToken = null;
 
   // Helper method to make HTTP requests cleanly

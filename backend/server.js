@@ -1,7 +1,7 @@
 // ════════════════════════════════════════════════════════════
 //  server.js — Hearth & Co. Backend
 //  Run:  node server.js   (or: npm run dev)
-//  API:  http://localhost:3001
+//  API:  http://hearth-co.onrender.com/
 // ════════════════════════════════════════════════════════════
 
 const express = require("express");
