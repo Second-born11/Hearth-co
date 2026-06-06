@@ -1,12 +1,12 @@
 /* ════════════════════════════════════════════════
-   api.js — Backend Communication Layer Broker
+   api.js — Complete Unified Layer
    Exposes global window.API mapping to the Express 
-   server instances running on port 3001.
+   server instances running on Render.
    ════════════════════════════════════════════════ */
 window.API = (() => {
   const BASE_URL = "https://hearth-co.onrender.com/api";
   
-  // 🌟 FIX: Instantly restore your admin authentication token across page reloads
+  // Instantly restore your admin authentication token across page reloads
   let adminToken = localStorage.getItem("admin_token") || null;
 
   // Auto-initialize a unique cart session token if one isn't saved yet
@@ -43,7 +43,7 @@ window.API = (() => {
   }
 
   return {
-    // 🌟 FIX: Persist the token to localStorage when logging in, or strip it on logout
+    // Persist the token to localStorage when logging in, or strip it on logout
     _setAdminToken: (token) => {
       adminToken = token;
       if (token) {
@@ -119,6 +119,58 @@ window.API = (() => {
         return request(`/cart/${sessionId}`, {
           method: "DELETE"
         });
+      }
+    },
+
+    /* ── 🌟 FIXED: WORKING ADMIN DASHBOARD COMMUNICATION LINKS ── */
+    Products: {
+      list: () => {
+        return request("/products", { method: "GET" });
+      },
+      update: (id, data) => {
+        return request(`/products/${id}`, {
+          method: "PUT",
+          body: JSON.stringify(data)
+        });
+      }
+    },
+
+    Orders: {
+      list: () => {
+        return request("/orders", { method: "GET" });
+      },
+      updateStatus: (id, status) => {
+        return request(`/orders/${id}/status`, {
+          method: "PUT",
+          body: JSON.stringify({ status })
+        });
+      }
+    },
+
+    Analytics: {
+      summary: () => {
+        return request("/analytics/summary", { method: "GET" });
+      },
+      salesByCategory: () => {
+        return request("/analytics/category", { method: "GET" });
+      },
+      weeklyRevenue: () => {
+        return request("/analytics/weekly", { method: "GET" });
+      },
+      topProducts: () => {
+        return request("/analytics/top", { method: "GET" });
+      }
+    },
+
+    Discounts: {
+      list: () => {
+        return request("/discounts", { method: "GET" });
+      }
+    },
+
+    Customers: {
+      list: () => {
+        return request("/customers", { method: "GET" });
       }
     }
   };

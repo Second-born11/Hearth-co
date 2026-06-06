@@ -24,8 +24,8 @@ router.get("/summary", (_req, res) => {
   });
 });
 
-// GET /api/analytics/sales-by-category
-router.get("/sales-by-category", (_req, res) => {
+// 🌟 FIXED PATH: GET /api/analytics/category (matches api.js)
+router.get("/category", (_req, res) => {
   const map = {};
   db.orders.forEach(order => {
     order.items.forEach(item => {
@@ -43,8 +43,8 @@ router.get("/sales-by-category", (_req, res) => {
   res.json({ salesByCategory: results });
 });
 
-// GET /api/analytics/weekly-revenue
-router.get("/weekly-revenue", (_req, res) => {
+// 🌟 FIXED PATH: GET /api/analytics/weekly (matches api.js)
+router.get("/weekly", (_req, res) => {
   // Simulated 7-day revenue data
   const days = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
   const data  = [310, 520, 390, 680, 590, 445, 720];
@@ -54,8 +54,8 @@ router.get("/weekly-revenue", (_req, res) => {
   });
 });
 
-// GET /api/analytics/top-products
-router.get("/top-products", (_req, res) => {
+// 🌟 FIXED PATH: GET /api/analytics/top (matches api.js)
+router.get("/top", (_req, res) => {
   const map = {};
   db.orders.forEach(order => {
     order.items.forEach(item => {
