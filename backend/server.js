@@ -10,7 +10,10 @@ const app     = express();
 const PORT    = process.env.PORT 
 
 // ── Middleware ────────────────────────────────────────────────
-app.use(cors());
+app.use(cors({
+  origin: ['http://127.0.0.1:5500', 'https://hearth-co-1.onrender.com'], // 🌟 Must include live frontend URL!
+  credentials: true
+}));
 app.use(express.json());
 app.use(express.static("public"));
 

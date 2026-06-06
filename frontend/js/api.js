@@ -6,7 +6,7 @@
 window.API = (() => {
   // 🌟 Ensured BASE_URL points securely to the Render backend API route tree
   const BASE_URL = "https://hearth-co.onrender.com/api";
-  let adminToken = null;
+  let adminToken = localStorage.getItem("admin_token") || null;
 
   // Helper method to make HTTP requests cleanly
   async function request(endpoint, options = {}) {
@@ -37,6 +37,11 @@ window.API = (() => {
   return {
     _setAdminToken: (token) => {
       adminToken = token;
+      if (token) {
+      localStorage.setItem("admin_token", token);
+    } else {
+      localStorage.removeItem("admin_token");
+    }
     },
 
     Auth: {
