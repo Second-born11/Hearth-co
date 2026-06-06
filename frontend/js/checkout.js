@@ -220,7 +220,7 @@ const Checkout = (() => {
           Your order <strong>${orderNum||"#"+Math.floor(1000+Math.random()*9000)}</strong> has been placed.<br>
           A confirmation was sent to <strong>${formData.email||"your email"}</strong>.
         </div>
-        <button class="nav-btn" data-page="store" id="close-success-modal-btn">Continue Shopping</button>
+        <button class="btn-primary" id="continue-shopping-btn">Continue Shopping</button>
       </div>`;
     Cart.clear();
     document.getElementById("continue-shopping-btn")?.addEventListener("click", () => {
