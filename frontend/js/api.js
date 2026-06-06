@@ -4,6 +4,7 @@
    server instances running on port 3001.
    ════════════════════════════════════════════════ */
 window.API = (() => {
+  // 🌟 Ensured BASE_URL points securely to the Render backend API route tree
   const BASE_URL = "https://hearth-co.onrender.com/api";
   let adminToken = null;
 
