@@ -212,7 +212,7 @@ const Admin = (() => {
               <div class="discount-detail">📅 Expires: ${d.expires || "Never"}</div>
               <div class="discount-used">Used ${d.uses} times</div>
             </div>
-          `).join("")}
+           `).join("")}
           <div class="discount-card" style="display:flex;align-items:center;justify-content:center;cursor:pointer;background:var(--cream)" id="add-discount-btn">
             <div style="text-align:center;color:var(--mid)">
               <div style="font-size:28px;margin-bottom:6px">＋</div>
@@ -273,6 +273,12 @@ const Admin = (() => {
   }
 
   async function init() {
+    // 🌟 FIX: Handshake token configuration with API wrapper layer before requests fire
+    const savedToken = localStorage.getItem("admin_token");
+    if (savedToken && window.API && typeof window.API._setAdminToken === "function") {
+      window.API._setAdminToken(savedToken);
+    }
+
     await _renderStats();
     _renderProducts();
     _renderOrders();

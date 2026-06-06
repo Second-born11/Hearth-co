@@ -5,9 +5,11 @@
    ════════════════════════════════════════════════ */
 window.API = (() => {
   const BASE_URL = "https://hearth-co.onrender.com/api";
+  
+  // 🌟 FIX: Instantly restore your admin authentication token across page reloads
   let adminToken = localStorage.getItem("admin_token") || null;
 
-  // 🌟 Auto-initialize a unique cart session token if one isn't saved yet
+  // Auto-initialize a unique cart session token if one isn't saved yet
   let sessionId = localStorage.getItem("cart_session_id");
   if (!sessionId) {
     sessionId = "session-" + Math.random().toString(36).substring(2, 15);
@@ -41,6 +43,7 @@ window.API = (() => {
   }
 
   return {
+    // 🌟 FIX: Persist the token to localStorage when logging in, or strip it on logout
     _setAdminToken: (token) => {
       adminToken = token;
       if (token) {
@@ -64,6 +67,8 @@ window.API = (() => {
         });
       },
       logout: () => {
+        localStorage.removeItem("admin_token"); // Clear storage trace
+        adminToken = null;
         return request("/auth/logout", { method: "POST" });
       },
       me: () => {
@@ -89,7 +94,6 @@ window.API = (() => {
       }
     },
 
-    /* ── 🌟 FIXED DYNAMIC CART API MAPS ── */
     Cart: {
       get: () => {
         return request(`/cart/${sessionId}`);
