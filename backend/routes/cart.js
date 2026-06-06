@@ -103,14 +103,12 @@ router.delete("/:sessionId/item/:cartItemId", (req, res) => {
 // ── DELETE /api/cart/:sessionId ────────────────────────────────
 router.delete("/:sessionId", (req, res) => {
   try {
-    if (db.carts && db.carts[req.params.sessionId]) {
-      db.carts[req.params.sessionId].items = [];
-    }
-    res.json({ message: "Cart cleared" });
+    const cart = getOrCreateCart(req.params.sessionId);
+    cart.items = [];
+    res.json(calcTotals(cart)); // 🌟 Returns empty cart matching frontend state logic cleanly
   } catch (error) {
     res.status(500).json({ error: "Internal Server Error clearing cart" });
   }
 });
 
 module.exports = router;
-
