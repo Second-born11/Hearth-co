@@ -6,10 +6,10 @@
 window.API = (() => {
   const BASE_URL = "https://hearth-co.onrender.com/api";
   
-  // Instantly restore your admin authentication token across page reloads
+  // 🌟 FIX: Instantly restore your admin authentication token across page reloads
   let adminToken = localStorage.getItem("admin_token") || null;
 
-  // Auto-initialize a unique cart session token if one isn't saved yet
+  // 🌟 FIX: Auto-initialize a unique cart session token so checkout loops don't snap
   let sessionId = localStorage.getItem("cart_session_id");
   if (!sessionId) {
     sessionId = "session-" + Math.random().toString(36).substring(2, 15);
@@ -43,7 +43,7 @@ window.API = (() => {
   }
 
   return {
-    // Persist the token to localStorage when logging in, or strip it on logout
+    // 🌟 FIX: Persist the token to localStorage when logging in, or strip it on logout
     _setAdminToken: (token) => {
       adminToken = token;
       if (token) {
@@ -122,7 +122,6 @@ window.API = (() => {
       }
     },
 
-    /* ── 🌟 FIXED: WORKING ADMIN DASHBOARD COMMUNICATION LINKS ── */
     Products: {
       list: () => {
         return request("/products", { method: "GET" });
@@ -138,6 +137,13 @@ window.API = (() => {
     Orders: {
       list: () => {
         return request("/orders", { method: "GET" });
+      },
+      /* ── 🌟 FIX: Submission interface map for checkout flow ── */
+      place: (orderData) => {
+        return request("/orders", {
+          method: "POST",
+          body: JSON.stringify({ sessionId, ...orderData })
+        });
       },
       updateStatus: (id, status) => {
         return request(`/orders/${id}/status`, {
