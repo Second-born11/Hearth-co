@@ -817,3 +817,89 @@ img { max-width: 100%; }
 }
 
 .logout-btn:hover { background: rgba(255,255,255,0.22); }
+
+
+/* ================================================================
+   CLOTHING STORE — Additional styles
+   REPLACE: These blocks if you change the design tokens above
+   ================================================================ */
+
+/* ── REPLACE: Product card clothing-specific tweaks ── */
+.product-emoji {
+  font-size: 72px;
+  line-height: 1;
+  display: block;
+}
+
+.product-rating {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-bottom: 4px;
+}
+
+.rating-count {
+  font-size: 11px;
+  color: var(--light);
+}
+
+/* ── REPLACE: Hero section for clothing store ── */
+.hero-badge {
+  background: var(--charcoal);
+  color: var(--white);
+}
+
+/* ── REPLACE: Store header subtitle ── */
+.store-header .section-sub::before {
+  content: "👗 ";
+}
+
+/* ── REPLACE: Category pill active state ── */
+.cat-pill.active {
+  background: var(--charcoal);
+  color: var(--white);
+}
+
+/* ── REPLACE: Add to cart button added state ── */
+.add-btn.added {
+  background: #2D6A4F;
+}
+
+/* ── REPLACE: Nav active state for clothing store ── */
+.nav-btn.active {
+  background: var(--charcoal);
+  color: var(--white);
+}
+
+/* ── REPLACE: Cart button for clothing store ── */
+.cart-btn {
+  background: var(--charcoal);
+  box-shadow: 0 4px 16px rgba(26,26,46,0.28);
+}
+
+.cart-btn:hover {
+  background: #2D2D4A;
+}
+
+/* ── REPLACE: Product card cursor hint ── */
+.product-card {
+  cursor: pointer;
+}
+
+.product-card::after {
+  content: "View Details →";
+  display: block;
+  font-size: 11px;
+  color: var(--light);
+  text-align: center;
+  padding: 8px 0 4px;
+  border-top: 1px solid var(--sand);
+  margin-top: 8px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  transition: color var(--transition);
+}
+
+.product-card:hover::after {
+  color: var(--charcoal);
+}

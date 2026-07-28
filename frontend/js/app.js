@@ -6,7 +6,7 @@ function showToast(msg, variant = "") {
   const toast = document.getElementById("toast");
   if (!toast) return;
   toast.textContent = msg;
-  toast.className = "toast show" + (variant ? " " + variant : "");
+  toast.className   = "toast show" + (variant ? " " + variant : "");
   clearTimeout(toast._t);
   toast._t = setTimeout(() => { toast.className = "toast hidden"; }, 2600);
 }
@@ -14,6 +14,7 @@ function showToast(msg, variant = "") {
 const App = (() => {
   let current = "store";
 
+  /* REPLACE: Page ID map — add new pages here */
   const PAGE_IDS = {
     store:        "page-store",
     architecture: "page-architecture",
@@ -22,6 +23,7 @@ const App = (() => {
     admin:        "page-admin"
   };
 
+  /* REPLACE: Navigate to a page ── */
   function navigate(page) {
     if (!PAGE_IDS[page]) return;
 
@@ -41,14 +43,15 @@ const App = (() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
     current = page;
 
-    // Page-specific actions
+    /* REPLACE: Page-specific init actions */
     if (page === "wishlist")     Wishlist.renderPage();
     if (page === "architecture") Architecture.init();
-    if (page === "admin")        Auth.guardAdmin();   // ← Normal 'Auth' used here
+    if (page === "admin")        Auth.guardAdmin();
   }
 
   function getCurrent() { return current; }
 
+  /* REPLACE: Bind all [data-page] buttons ── */
   function _bindNavButtons() {
     document.querySelectorAll("[data-page]").forEach(btn => {
       btn.addEventListener("click", () => {
@@ -58,12 +61,14 @@ const App = (() => {
     });
   }
 
+  /* REPLACE: Mobile hamburger menu ── */
   function _bindHamburger() {
     const ham  = document.getElementById("hamburger");
     const menu = document.getElementById("mobile-menu");
     ham?.addEventListener("click", () => menu?.classList.toggle("hidden"));
   }
 
+  /* REPLACE: Navbar scroll shadow effect ── */
   function _bindScroll() {
     const nav = document.getElementById("navbar");
     window.addEventListener("scroll", () => {

@@ -1,15 +1,15 @@
-/* ════════════════════════════════════════════════
-   wishlist.js — Wishlist state & page rendering
-   ════════════════════════════════════════════════ */
+/* ================================================================
+   wishlist.js — Wishlist with localStorage persistence
+   REPLACE: The renderPage card HTML if you change product fields
+   ================================================================ */
 
 const Wishlist = (() => {
   const KEY = "hearth_wishlist";
   let ids = new Set(JSON.parse(localStorage.getItem(KEY) || "[]"));
 
-  function _save() {
-    localStorage.setItem(KEY, JSON.stringify([...ids]));
-  }
+  function _save() { localStorage.setItem(KEY, JSON.stringify([...ids])); }
 
+  /* ── REPLACE: Toggle a product in/out of wishlist ── */
   function toggle(productId) {
     if (ids.has(productId)) {
       ids.delete(productId);
@@ -20,12 +20,11 @@ const Wishlist = (() => {
     }
     _save();
     _syncBadge();
-    _syncButtons(productId);
   }
 
-  function has(productId) { return ids.has(productId); }
-  function getIds()       { return [...ids]; }
-  function count()        { return ids.size; }
+  function has(productId)  { return ids.has(productId); }
+  function getIds()        { return [...ids]; }
+  function count()         { return ids.size; }
 
   function _syncBadge() {
     const badge = document.getElementById("wishlist-badge");
@@ -34,13 +33,7 @@ const Wishlist = (() => {
     badge.classList.toggle("hidden", ids.size === 0);
   }
 
-  function _syncButtons(productId) {
-    document.querySelectorAll(`.wishlist-btn[data-id="${productId}"]`).forEach(btn => {
-      btn.classList.toggle("active", ids.has(productId));
-      btn.textContent = ids.has(productId) ? "❤️" : "🤍";
-    });
-  }
-
+  /* ── REPLACE: Wishlist page renderer ── */
   function renderPage() {
     const grid  = document.getElementById("wishlist-grid");
     const empty = document.getElementById("wishlist-empty");
@@ -54,77 +47,86 @@ const Wishlist = (() => {
     }
     empty && empty.classList.add("hidden");
 
-    grid.innerHTML = products.map(p => `
-      <div class="product-card wishlist-card" data-id="${p.id}">
-        <div class="product-img">
-          ${p.tag ? `<span class="product-tag" style="background:${TAG_COLORS[p.tag]}">${p.tag}</span>` : ""}
-          <span class="product-category">${p.category}</span>
-          <span>${p.emoji}</span>
-          <button class="wishlist-btn active" data-id="${p.id}">❤️</button>
-        </div>
-        <div class="product-body">
-          <div class="product-name">${p.title}</div>
-          <div class="product-desc">${p.description}</div>
-          <div class="variant-pills">
-            ${p.variants.map((v, i) => `<button class="variant-pill${i===0?" active":""}" data-pid="${p.id}" data-v="${v}">${v}</button>`).join("")}
+    /* REPLACE: Wishlist card HTML (clothing-focused) */
+    grid.innerHTML = products.map(p => {
+      const sizes = p.sizes || p.variants || [];
+      return `
+        <div class="product-card" data-id="${p.id}">
+          <div class="product-img">
+            ${p.tag ? `<span class="product-tag" style="background:${TAG_COLORS[p.tag]||"#333"}">${p.tag}</span>` : ""}
+            <span class="product-category">${p.category}</span>
+            <span class="product-emoji">${p.emoji || "👗"}</span>
+            <button class="wishlist-btn active" data-id="${p.id}">❤️</button>
           </div>
-          <div class="product-footer">
-            <div>
-              <span class="product-price">${fmt(p.price)}</span>
-              ${p.compare ? `<span class="price-compare">${fmt(p.compare)}</span>` : ""}
+          <div class="product-body">
+            <div class="product-name">${p.title}</div>
+            <div class="product-rating">
+              ${renderStars(p.rating || 0, true)}
+              <span class="rating-count">(${p.reviewCount || p.reviews?.length || 0})</span>
             </div>
-            <button class="add-btn" data-pid="${p.id}">Add to Cart</button>
+            <div class="product-desc">${p.description}</div>
+            <div class="variant-pills">
+              ${sizes.slice(0,5).map((s,i) => {
+                const label = typeof s === "object" ? s.title : s;
+                return `<button class="variant-pill${i===0?" active":""}" data-v="${label}">${label}</button>`;
+              }).join("")}
+            </div>
+            <div class="product-footer">
+              <div>
+                <span class="product-price">${fmt(p.price)}</span>
+                ${p.compareAt||p.compare ? `<span class="price-compare">${fmt(p.compareAt||p.compare)}</span>` : ""}
+              </div>
+              <button class="add-btn" data-pid="${p.id}">Add to Cart</button>
+            </div>
           </div>
         </div>
-      </div>
-    `).join("");
+      `;
+    }).join("");
 
-    // Variant selection
+    /* Size pill selection */
     grid.querySelectorAll(".variant-pill").forEach(pill => {
       pill.addEventListener("click", e => {
         e.stopPropagation();
-        const card = pill.closest(".product-card");
-        card.querySelectorAll(".variant-pill").forEach(p => p.classList.remove("active"));
+        pill.closest(".product-card").querySelectorAll(".variant-pill")
+          .forEach(p => p.classList.remove("active"));
         pill.classList.add("active");
       });
     });
 
-    // Add to cart
+    /* Add to cart */
     grid.querySelectorAll(".add-btn").forEach(btn => {
-      btn.addEventListener("click", e => {
+      btn.addEventListener("click", async e => {
         e.stopPropagation();
-        const card = btn.closest(".product-card");
+        const card    = btn.closest(".product-card");
         const product = PRODUCTS.find(p => p.id === btn.dataset.pid);
-        const selected = card.querySelector(".variant-pill.active")?.dataset.v || product.variants[0];
-        Cart.add({ ...product, selectedVariant: selected });
+        const variant = card.querySelector(".variant-pill.active")?.dataset.v
+                        || (product.sizes?.[0] || "One Size");
+        await Cart.addItem(product, variant);
         btn.textContent = "✓ Added";
         btn.classList.add("added");
         setTimeout(() => { btn.textContent = "Add to Cart"; btn.classList.remove("added"); }, 1500);
       });
     });
 
-    // Wishlist toggle
+    /* Wishlist remove */
     grid.querySelectorAll(".wishlist-btn").forEach(btn => {
       btn.addEventListener("click", e => {
         e.stopPropagation();
         toggle(btn.dataset.id);
-        // re-render since item was removed
         setTimeout(renderPage, 300);
       });
     });
 
-    // Card click → detail modal
+    /* Card click → product detail window */
     grid.querySelectorAll(".product-card").forEach(card => {
       card.addEventListener("click", () => {
         const product = PRODUCTS.find(p => p.id === card.dataset.id);
-        if (product) ProductDetail.open(product);
+        if (product) ProductDetail.openWindow(product);
       });
     });
   }
 
-  function init() {
-    _syncBadge();
-  }
+  function init() { _syncBadge(); }
 
   return { init, toggle, has, getIds, count, renderPage };
 })();
