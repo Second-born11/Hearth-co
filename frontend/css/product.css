@@ -1,0 +1,268 @@
+/* ================================================================
+   product.css — Styles for product.html (separate product page)
+   Place this file in your css/ folder
+   ================================================================ */
+
+:root {
+  --cream:    #FAF7F2;
+  --sand:     #F0EAE0;
+  --sand-mid: #E3D9CC;
+  --charcoal: #1A1A2E;
+  --mid:      #7A6F65;
+  --light:    #B5ADA5;
+  --white:    #fff;
+  --green:    #2D6A4F;
+  --red:      #C84A4A;
+  --gold:     #C8A84B;
+
+  --font-display: 'Playfair Display', Georgia, serif;
+  --font-body:    'DM Sans', system-ui, sans-serif;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-pill: 100px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font-body);
+  background: var(--cream);
+  color: var(--charcoal);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+button { font-family: var(--font-body); cursor: pointer; border: none; background: none; }
+input, select, textarea { font-family: var(--font-body); }
+
+/* ── Header ── */
+.ph-header {
+  background: var(--charcoal);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 32px;
+  position: sticky; top: 0; z-index: 10;
+}
+.ph-logo {
+  font-family: var(--font-display);
+  font-size: 20px; font-weight: 700;
+  color: #fff; text-decoration: none;
+}
+.ph-back {
+  color: rgba(255,255,255,0.7);
+  font-size: 13px; font-weight: 600;
+  transition: color .2s;
+}
+.ph-back:hover { color: #fff; }
+
+/* ── Loading ── */
+.ph-loading {
+  text-align: center;
+  padding: 80px 24px;
+  color: var(--mid);
+  font-size: 15px;
+}
+.hidden { display: none !important; }
+
+/* ── Main product grid ── */
+.ph-wrap {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 52px 24px 60px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 52px;
+  align-items: start;
+}
+
+/* ── Image column ── */
+.ph-img-col { position: sticky; top: 96px; }
+.ph-img-box {
+  background: linear-gradient(135deg, var(--sand), var(--cream));
+  border-radius: var(--radius-lg);
+  height: 440px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 110px;
+  position: relative;
+}
+.ph-tag {
+  position: absolute; top: 16px; left: 16px;
+  color: #fff; padding: 4px 12px;
+  border-radius: var(--radius-pill);
+  font-size: 10px; font-weight: 700;
+  letter-spacing: .8px; text-transform: uppercase;
+}
+.ph-category {
+  position: absolute; top: 16px; right: 16px;
+  background: rgba(255,255,255,.85);
+  color: var(--mid);
+  padding: 4px 12px;
+  border-radius: var(--radius-pill);
+  font-size: 10px; font-weight: 600;
+}
+
+/* ── Info column ── */
+.ph-category-label {
+  font-size: 11px; font-weight: 700;
+  letter-spacing: 1.2px; text-transform: uppercase;
+  color: var(--mid); margin-bottom: 8px;
+}
+.ph-title {
+  font-family: var(--font-display);
+  font-size: 34px; font-weight: 700;
+  color: var(--charcoal);
+  line-height: 1.2; letter-spacing: -.5px;
+  margin-bottom: 14px;
+}
+.ph-rating-row {
+  display: flex; align-items: center; gap: 8px;
+  margin-bottom: 16px;
+}
+.ph-stars      { color: var(--gold); font-size: 18px; }
+.ph-rating-num { font-size: 14px; font-weight: 700; color: var(--charcoal); }
+.ph-review-count { font-size: 13px; color: var(--mid); }
+.ph-price-row  { display: flex; align-items: baseline; gap: 10px; margin-bottom: 6px; }
+.ph-price {
+  font-family: var(--font-display);
+  font-size: 30px; font-weight: 700;
+  color: var(--charcoal);
+}
+.ph-compare { font-size: 16px; color: var(--light); text-decoration: line-through; }
+.ph-stock   { font-size: 12px; color: var(--green); font-weight: 600; margin-bottom: 20px; }
+.ph-divider { height: 1px; background: var(--sand); margin: 20px 0; border: none; }
+
+/* ── Size / colour options ── */
+.ph-label {
+  font-size: 11px; font-weight: 700;
+  letter-spacing: .8px; text-transform: uppercase;
+  color: var(--mid); margin-bottom: 10px;
+}
+.ph-options { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 4px; }
+.ph-opt {
+  padding: 7px 16px; border-radius: var(--radius-pill);
+  border: 1.5px solid var(--sand);
+  font-size: 12px; font-weight: 600;
+  color: var(--mid); cursor: pointer;
+  transition: all .15s;
+}
+.ph-opt:hover  { border-color: var(--charcoal); color: var(--charcoal); }
+.ph-opt.active { background: var(--charcoal); color: #fff; border-color: var(--charcoal); }
+
+/* ── CTA buttons ── */
+.ph-cta { display: flex; gap: 10px; margin: 20px 0; flex-wrap: wrap; }
+.ph-btn-primary {
+  background: var(--charcoal); color: #fff;
+  padding: 14px 28px; border-radius: var(--radius-pill);
+  font-size: 14px; font-weight: 700;
+  transition: all .2s; flex: 1;
+}
+.ph-btn-primary:hover { background: #2D2D4A; transform: translateY(-1px); }
+.ph-btn-outline {
+  background: transparent; color: var(--charcoal);
+  border: 1.5px solid var(--sand);
+  padding: 14px 18px; border-radius: var(--radius-pill);
+  font-size: 14px; font-weight: 600;
+  transition: all .2s;
+}
+.ph-btn-outline:hover { border-color: var(--charcoal); }
+
+/* ── About section ── */
+.ph-about-title {
+  font-family: var(--font-display);
+  font-size: 17px; font-weight: 700;
+  color: var(--charcoal); margin-bottom: 8px;
+}
+.ph-about-text { font-size: 14px; color: var(--mid); line-height: 1.8; }
+
+/* ── Reviews section ── */
+.ph-reviews-section {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 24px 80px;
+}
+.ph-reviews-title {
+  font-family: var(--font-display);
+  font-size: 28px; font-weight: 700;
+  color: var(--charcoal); margin-bottom: 6px;
+}
+.ph-reviews-sub { font-size: 13px; color: var(--mid); margin-bottom: 32px; }
+
+/* Rating summary */
+.ph-rating-summary {
+  background: #fff; border-radius: var(--radius-lg);
+  padding: 28px; margin-bottom: 28px;
+  box-shadow: 0 2px 12px rgba(0,0,0,.05);
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  gap: 32px; align-items: center;
+}
+.ph-rating-big   { text-align: center; }
+.ph-big-num      { font-family: var(--font-display); font-size: 52px; font-weight: 700; color: var(--charcoal); line-height: 1; }
+.ph-big-stars    { color: var(--gold); font-size: 20px; margin: 6px 0; }
+.ph-big-label    { font-size: 12px; color: var(--mid); }
+.ph-rating-bars  { display: flex; flex-direction: column; gap: 8px; }
+.ph-bar-row      { display: flex; align-items: center; gap: 10px; }
+.ph-bar-label    { font-size: 12px; font-weight: 600; color: var(--mid); width: 28px; text-align: right; }
+.ph-bar-track    { flex: 1; height: 8px; background: var(--sand); border-radius: 4px; overflow: hidden; }
+.ph-bar-fill     { height: 100%; background: var(--gold); border-radius: 4px; }
+.ph-bar-count    { font-size: 12px; color: var(--mid); width: 24px; }
+
+/* Review cards */
+.ph-review-list  { display: flex; flex-direction: column; gap: 16px; margin-bottom: 40px; }
+.ph-review-card  { background: #fff; border-radius: var(--radius-lg); padding: 22px 24px; box-shadow: 0 2px 10px rgba(0,0,0,.05); }
+.ph-review-top   { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; flex-wrap: wrap; gap: 8px; }
+.ph-review-author  { font-weight: 700; font-size: 14px; color: var(--charcoal); }
+.ph-verified       { font-size: 10px; color: var(--green); font-weight: 700; letter-spacing: .5px; background: #E8F5E9; padding: 2px 8px; border-radius: var(--radius-pill); margin-left: 8px; }
+.ph-review-date    { font-size: 11px; color: var(--light); }
+.ph-review-stars   { color: var(--gold); font-size: 14px; margin-bottom: 6px; }
+.ph-review-text    { font-size: 14px; color: var(--mid); line-height: 1.7; }
+.ph-review-purchase{ font-size: 11px; color: var(--light); margin-top: 8px; }
+
+/* Review form */
+.ph-review-form  { background: #fff; border-radius: var(--radius-lg); padding: 32px; box-shadow: 0 2px 12px rgba(0,0,0,.05); }
+.ph-form-title   { font-family: var(--font-display); font-size: 22px; font-weight: 700; color: var(--charcoal); margin-bottom: 6px; }
+.ph-form-sub     { font-size: 13px; color: var(--mid); margin-bottom: 24px; }
+.ph-form-group   { margin-bottom: 16px; }
+.ph-form-row     { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.ph-form-label   { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; color: var(--mid); display: block; margin-bottom: 6px; }
+.ph-form-input   { width: 100%; padding: 11px 14px; border-radius: var(--radius-md); border: 1.5px solid var(--sand); font-size: 14px; color: var(--charcoal); outline: none; background: var(--cream); transition: border-color .2s; }
+.ph-form-input:focus { border-color: var(--charcoal); background: #fff; }
+.ph-form-textarea { width: 100%; padding: 11px 14px; border-radius: var(--radius-md); border: 1.5px solid var(--sand); font-size: 14px; color: var(--charcoal); outline: none; background: var(--cream); resize: vertical; min-height: 100px; transition: border-color .2s; }
+.ph-form-textarea:focus { border-color: var(--charcoal); background: #fff; }
+
+/* Star picker */
+.ph-star-picker { display: flex; gap: 6px; }
+.ph-star        { font-size: 28px; cursor: pointer; color: #E3D9CC; transition: color .15s; }
+.ph-star.selected { color: var(--gold); }
+
+.ph-submit-btn  { background: var(--charcoal); color: #fff; padding: 13px 32px; border-radius: var(--radius-pill); font-size: 14px; font-weight: 700; transition: all .2s; margin-top: 8px; }
+.ph-submit-btn:hover { background: #2D2D4A; }
+.ph-form-success { background: #E8F5E9; color: var(--green); border-radius: var(--radius-md); padding: 14px 18px; font-size: 14px; font-weight: 600; margin-top: 14px; }
+.ph-form-error   { background: #FDECEA; color: var(--red); border-radius: var(--radius-md); padding: 14px 18px; font-size: 14px; font-weight: 600; margin-top: 14px; }
+
+/* Card "view details" hint on store page */
+.card-view-hint {
+  font-size: 11px; color: var(--light);
+  text-align: center;
+  padding: 8px 0 4px;
+  border-top: 1px solid var(--sand);
+  margin-top: 8px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  transition: color .2s;
+}
+.product-card:hover .card-view-hint { color: var(--charcoal); }
+
+/* Product rating row on store cards */
+.product-rating { display: flex; align-items: center; gap: 5px; margin-bottom: 4px; }
+.rating-count   { font-size: 11px; color: var(--light); }
+
+@media (max-width: 680px) {
+  .ph-wrap     { grid-template-columns: 1fr; padding: 32px 16px 48px; }
+  .ph-img-col  { position: static; }
+  .ph-form-row { grid-template-columns: 1fr; }
+  .ph-rating-summary { grid-template-columns: 1fr; }
+}

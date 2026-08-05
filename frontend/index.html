@@ -52,9 +52,9 @@
         <div class="hero-content">
           <span class="hero-badge">Headless E-commerce Demo</span>
           <h1 class="hero-title">React + Shopify<br>Storefront API</h1>
-          <p class="hero-sub">A fully functional headless storefront demonstrating modern e-commerce architecture — decoupled frontend, GraphQL data layer, and Shopify as the commerce engine.</p>
+          <p class="hero-sub"><b>A fully functional headless storefront demonstrating modern e-commerce architecture — decoupled frontend, GraphQL data layer, and Shopify as the commerce engine.</b></p>
           <div class="hero-ctas">
-            <button class="btn-primary nav-btn" data-page="store" id="browse-btn">Browse the Store -></button>
+            <button class="btn-primary" id="browse-btn" onclick="document.getElementById('store-wrap')?.scrollIntoView({ behavior: 'smooth' })">Browse the Store -&gt;</button>
             <button class="btn-outline" data-page="architecture">View Architecture</button>
           </div>
           <div class="hero-stats">
@@ -67,7 +67,7 @@
       </div>
 
       <!-- Store Controls -->
-      <div class="store-wrap">
+      <div class="store-wrap" id="store-wrap">
         <div class="store-header">
           <div>
             <h2 class="section-title">Shop the Collection</h2>

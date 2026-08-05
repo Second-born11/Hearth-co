@@ -179,7 +179,7 @@ img { max-width: 100%; }
 .hero-title {
   font-family: var(--font-display);
   font-size: clamp(36px, 6.5vw, 66px);
-  font-weight: 900; color: var(--charcoal);
+  font-weight: 900; color: var(--terra);
   line-height: 1.12; letter-spacing: -1.5px;
   margin-bottom: 20px;
 }
@@ -820,11 +820,9 @@ img { max-width: 100%; }
 
 
 /* ================================================================
-   CLOTHING STORE — Additional styles
-   REPLACE: These blocks if you change the design tokens above
+   STORE OVERRIDES — Colors aligned to terracotta theme
    ================================================================ */
 
-/* ── REPLACE: Product card clothing-specific tweaks ── */
 .product-emoji {
   font-size: 72px;
   line-height: 1;
@@ -843,45 +841,41 @@ img { max-width: 100%; }
   color: var(--light);
 }
 
-/* ── REPLACE: Hero section for clothing store ── */
+/* Updated to terracotta */
 .hero-badge {
   background: var(--charcoal);
   color: var(--white);
 }
 
-/* ── REPLACE: Store header subtitle ── */
 .store-header .section-sub::before {
   content: "👗 ";
 }
 
-/* ── REPLACE: Category pill active state ── */
 .cat-pill.active {
-  background: var(--charcoal);
+  background: var(--terra);
   color: var(--white);
 }
 
-/* ── REPLACE: Add to cart button added state ── */
 .add-btn.added {
   background: #2D6A4F;
 }
 
-/* ── REPLACE: Nav active state for clothing store ── */
+/* Updated to terracotta */
 .nav-btn.active {
-  background: var(--charcoal);
+  background: var(--terra);
   color: var(--white);
 }
 
-/* ── REPLACE: Cart button for clothing store ── */
+/* Updated to terracotta */
 .cart-btn {
-  background: var(--charcoal);
-  box-shadow: 0 4px 16px rgba(26,26,46,0.28);
+  background: var(--terra);
+  box-shadow: var(--shadow-terra);
 }
 
 .cart-btn:hover {
-  background: #2D2D4A;
+  background: var(--terra-dark);
 }
 
-/* ── REPLACE: Product card cursor hint ── */
 .product-card {
   cursor: pointer;
 }

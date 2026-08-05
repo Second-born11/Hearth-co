@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Product — Hearth & Co.</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="css/product.css"/>
+</head>
+<body>
+
+  <!-- ░░ HEADER ░░ -->
+  <header class="ph-header">
+    <a href="index.html" class="ph-logo">🌿 Hearth &amp; Co.</a>
+    <button class="ph-back" onclick="window.history.length > 1 ? window.history.back() : window.location.href='index.html'">← Back to Store</button>
+  </header>
+
+  <!-- ░░ LOADING STATE ░░ -->
+  <div id="loading" class="ph-loading">Loading product…</div>
+
+  <!-- ░░ MAIN PRODUCT LAYOUT ░░ -->
+  <div id="product-wrap" class="ph-wrap hidden">
+
+    <!-- Left: image -->
+    <div class="ph-img-col">
+      <div class="ph-img-box" id="ph-img-box">
+        <span id="ph-emoji"></span>
+        <span id="ph-tag" class="ph-tag hidden"></span>
+        <span id="ph-category" class="ph-category"></span>
+      </div>
+    </div>
+
+    <!-- Right: info -->
+    <div class="ph-info-col">
+      <div id="ph-category-label" class="ph-category-label"></div>
+      <h1 id="ph-title" class="ph-title"></h1>
+
+      <!-- Rating -->
+      <div class="ph-rating-row">
+        <span id="ph-stars"      class="ph-stars"></span>
+        <span id="ph-rating-num" class="ph-rating-num"></span>
+        <span id="ph-review-count" class="ph-review-count"></span>
+      </div>
+
+      <!-- Price -->
+      <div class="ph-price-row">
+        <span id="ph-price"   class="ph-price"></span>
+        <span id="ph-compare" class="ph-compare hidden"></span>
+      </div>
+      <div id="ph-stock" class="ph-stock"></div>
+
+      <hr class="ph-divider"/>
+
+      <!-- Size selector -->
+      <div id="ph-sizes-wrap">
+        <div class="ph-label">Size</div>
+        <div class="ph-options" id="ph-sizes"></div>
+      </div>
+
+      <!-- Colour selector -->
+      <div id="ph-colors-wrap">
+        <div class="ph-label" style="margin-top:16px">Colour</div>
+        <div class="ph-options" id="ph-colors"></div>
+      </div>
+
+      <!-- CTAs -->
+      <div class="ph-cta">
+        <button class="ph-btn-primary" id="ph-add-btn">Add to Cart</button>
+        <button class="ph-btn-outline" id="ph-wish-btn">🤍 Wishlist</button>
+      </div>
+
+      <hr class="ph-divider"/>
+
+      <!-- About section -->
+      <div class="ph-about">
+        <div class="ph-about-title">About this piece</div>
+        <div id="ph-about-text" class="ph-about-text"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ░░ REVIEWS SECTION ░░ -->
+  <div id="reviews-wrap" class="ph-reviews-section hidden">
+
+    <h2 class="ph-reviews-title">Customer Reviews</h2>
+    <p id="ph-reviews-sub" class="ph-reviews-sub"></p>
+
+    <!-- Rating breakdown -->
+    <div class="ph-rating-summary">
+      <div class="ph-rating-big">
+        <div id="ph-big-num"   class="ph-big-num"></div>
+        <div id="ph-big-stars" class="ph-big-stars"></div>
+        <div class="ph-big-label">out of 5</div>
+      </div>
+      <div class="ph-rating-bars" id="ph-rating-bars"></div>
+    </div>
+
+    <!-- Review cards -->
+    <div class="ph-review-list" id="ph-review-list"></div>
+
+    <!-- ░░ REVIEW FORM ░░ -->
+    <div class="ph-review-form">
+      <h3 class="ph-form-title">Write a Review</h3>
+      <p class="ph-form-sub">Share your experience to help other shoppers</p>
+
+      <div class="ph-form-row">
+        <div class="ph-form-group">
+          <label class="ph-form-label">Your Name</label>
+          <input class="ph-form-input" id="r-name" placeholder="Jane Smith"/>
+        </div>
+        <div class="ph-form-group">
+          <label class="ph-form-label">Email (not published)</label>
+          <input class="ph-form-input" id="r-email" type="email" placeholder="jane@example.com"/>
+        </div>
+      </div>
+
+      <div class="ph-form-row">
+        <div class="ph-form-group">
+          <label class="ph-form-label">Size Purchased</label>
+          <select class="ph-form-input" id="r-size">
+            <option value="">Select size</option>
+          </select>
+        </div>
+        <div class="ph-form-group">
+          <label class="ph-form-label">Colour Purchased</label>
+          <select class="ph-form-input" id="r-colour">
+            <option value="">Select colour</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="ph-form-group">
+        <label class="ph-form-label">Your Rating</label>
+        <div class="ph-star-picker" id="ph-star-picker">
+          <span class="ph-star" data-star="1">★</span>
+          <span class="ph-star" data-star="2">★</span>
+          <span class="ph-star" data-star="3">★</span>
+          <span class="ph-star" data-star="4">★</span>
+          <span class="ph-star" data-star="5">★</span>
+        </div>
+      </div>
+
+      <div class="ph-form-group">
+        <label class="ph-form-label">Your Review</label>
+        <textarea class="ph-form-textarea" id="r-text"
+          placeholder="What did you love about it? How does it fit?"></textarea>
+      </div>
+
+      <button class="ph-submit-btn" id="ph-submit-btn">Submit Review</button>
+      <div class="ph-form-success hidden" id="ph-success">✓ Thank you! Your review has been submitted.</div>
+      <div class="ph-form-error   hidden" id="ph-error"></div>
+    </div>
+  </div>
+
+  <script>
+    /* ============================================================
+       product.js — Inline script for product.html
+       Reads product from sessionStorage, renders the page,
+       handles cart add, wishlist, and review submission.
+       ============================================================ */
+
+    const TAG_COLORS = { "Bestseller": "#1A1A2E", "New": "#2D6A4F", "Sale": "#C84A4A" };
+    function fmt(n) { return "$" + Number(n).toFixed(2); }
+    function stars(n) { return "★".repeat(Math.round(n)) + "☆".repeat(5 - Math.round(n)); }
+
+    /* ── Read product from sessionStorage ── */
+    const product = JSON.parse(sessionStorage.getItem("hearth_product") || "null");
+
+    if (!product) {
+      document.getElementById("loading").textContent = "Product not found. Please go back and try again.";
+    } else {
+      renderProduct(product);
+    }
+
+    function renderProduct(p) {
+      document.title = p.title + " — Hearth & Co.";
+
+      /* Image box */
+      document.getElementById("ph-emoji").textContent = p.emoji || "👗";
+      document.getElementById("ph-category").textContent = p.category;
+
+      if (p.tag) {
+        const tagEl = document.getElementById("ph-tag");
+        tagEl.textContent = p.tag;
+        tagEl.style.background = TAG_COLORS[p.tag] || "#333";
+        tagEl.classList.remove("hidden");
+      }
+
+      /* Info */
+      document.getElementById("ph-category-label").textContent = p.category;
+      document.getElementById("ph-title").textContent = p.title;
+
+      /* Stars */
+      const rating = p.rating || 0;
+      const reviewCount = p.reviewCount || (p.reviews || []).length;
+      document.getElementById("ph-stars").textContent = stars(rating);
+      document.getElementById("ph-rating-num").textContent = rating.toFixed(1);
+      document.getElementById("ph-review-count").textContent = `(${reviewCount} reviews)`;
+
+      /* Price */
+      document.getElementById("ph-price").textContent = fmt(p.price);
+      const compareVal = p.compareAt || p.compare;
+      if (compareVal) {
+        const el = document.getElementById("ph-compare");
+        el.textContent = fmt(compareVal);
+        el.classList.remove("hidden");
+      }
+      document.getElementById("ph-stock").textContent = `✓ ${p.stock || 0} in stock`;
+
+      /* About */
+      document.getElementById("ph-about-text").textContent = p.about || p.description;
+
+      /* Sizes */
+      const sizes = p.sizes || [];
+      const sizesWrap = document.getElementById("ph-sizes-wrap");
+      if (sizes.length) {
+        const sizesEl = document.getElementById("ph-sizes");
+        sizesEl.innerHTML = sizes.map((s, i) =>
+          `<button class="ph-opt${i===0?" active":""}" data-size="${s}">${s}</button>`
+        ).join("");
+        sizesEl.querySelectorAll(".ph-opt").forEach(btn => {
+          btn.addEventListener("click", () => {
+            sizesEl.querySelectorAll(".ph-opt").forEach(b => b.classList.remove("active"));
+            btn.classList.add("active");
+          });
+        });
+        /* Populate review size dropdown */
+        const rSize = document.getElementById("r-size");
+        sizes.forEach(s => {
+          const opt = document.createElement("option");
+          opt.value = opt.textContent = s;
+          rSize.appendChild(opt);
+        });
+      } else {
+        sizesWrap.style.display = "none";
+      }
+
+      /* Colours */
+      const colors = p.colors || [];
+      const colorsWrap = document.getElementById("ph-colors-wrap");
+      if (colors.length) {
+        const colorsEl = document.getElementById("ph-colors");
+        colorsEl.innerHTML = colors.map((c, i) =>
+          `<button class="ph-opt${i===0?" active":""}" data-colour="${c}">${c}</button>`
+        ).join("");
+        colorsEl.querySelectorAll(".ph-opt").forEach(btn => {
+          btn.addEventListener("click", () => {
+            colorsEl.querySelectorAll(".ph-opt").forEach(b => b.classList.remove("active"));
+            btn.classList.add("active");
+          });
+        });
+        /* Populate review colour dropdown */
+        const rColour = document.getElementById("r-colour");
+        colors.forEach(c => {
+          const opt = document.createElement("option");
+          opt.value = opt.textContent = c;
+          rColour.appendChild(opt);
+        });
+      } else {
+        colorsWrap.style.display = "none";
+      }
+
+      /* Show main layout */
+      document.getElementById("loading").classList.add("hidden");
+      document.getElementById("product-wrap").classList.remove("hidden");
+      document.getElementById("reviews-wrap").classList.remove("hidden");
+
+      /* Reviews */
+      renderReviews(p.reviews || []);
+
+      /* Buttons */
+      bindButtons(p, sizes, colors);
+    }
+
+    function renderReviews(reviews) {
+      document.getElementById("ph-reviews-sub").textContent =
+        `${reviews.length} review${reviews.length !== 1 ? "s" : ""}`;
+
+      /* Big number */
+      const avg = reviews.length
+        ? (reviews.reduce((s, r) => s + r.stars, 0) / reviews.length)
+        : 0;
+      document.getElementById("ph-big-num").textContent   = avg.toFixed(1);
+      document.getElementById("ph-big-stars").textContent = stars(avg);
+
+      /* Bar breakdown */
+      const barsEl = document.getElementById("ph-rating-bars");
+      barsEl.innerHTML = [5,4,3,2,1].map(n => {
+        const count = reviews.filter(r => r.stars === n).length;
+        const pct   = reviews.length ? Math.round((count / reviews.length) * 100) : 0;
+        return `
+          <div class="ph-bar-row">
+            <span class="ph-bar-label">${n}★</span>
+            <div class="ph-bar-track">
+              <div class="ph-bar-fill" style="width:${pct}%"></div>
+            </div>
+            <span class="ph-bar-count">${count}</span>
+          </div>`;
+      }).join("");
+
+      /* Review cards */
+      const listEl = document.getElementById("ph-review-list");
+      if (reviews.length === 0) {
+        listEl.innerHTML = `<p style="color:#B5ADA5;font-size:14px">No reviews yet. Be the first to review this product!</p>`;
+        return;
+      }
+      listEl.innerHTML = reviews.map(r => `
+        <div class="ph-review-card">
+          <div class="ph-review-top">
+            <div>
+              <span class="ph-review-author">${r.author}</span>
+              ${r.verified ? `<span class="ph-verified">✓ Verified Purchase</span>` : ""}
+            </div>
+            <span class="ph-review-date">${r.date || ""}</span>
+          </div>
+          <div class="ph-review-stars">${"★".repeat(r.stars)}${"☆".repeat(5-r.stars)}</div>
+          <div class="ph-review-text">${r.text}</div>
+          ${(r.size||r.color||r.colour)
+            ? `<div class="ph-review-purchase">Purchased: ${[r.size, r.color||r.colour].filter(Boolean).join(" / ")}</div>`
+            : ""}
+        </div>
+      `).join("");
+    }
+
+    function bindButtons(p, sizes, colors) {
+      /* Add to Cart */
+      const addBtn = document.getElementById("ph-add-btn");
+      addBtn.addEventListener("click", () => {
+        const size   = document.querySelector("#ph-sizes  .ph-opt.active")?.dataset.size   || sizes[0]  || "";
+        const colour = document.querySelector("#ph-colors .ph-opt.active")?.dataset.colour || colors[0] || "";
+        const variant = [size, colour].filter(Boolean).join(" / ");
+
+        /* Post message to the main window (index.html) */
+        if (window.opener) {
+          window.opener.postMessage({
+            type: "ADD_TO_CART",
+            product: {
+              id:    p.id,
+              title: p.title,
+              price: p.price,
+              emoji: p.emoji || "👗",
+              stock: p.stock
+            },
+            variant
+          }, "*");
+        }
+
+        addBtn.textContent = "✓ Added to Cart!";
+        addBtn.style.background = "#2D6A4F";
+        setTimeout(() => {
+          addBtn.textContent = "Add to Cart";
+          addBtn.style.background = "";
+        }, 2000);
+      });
+
+      /* Wishlist */
+      const wishBtn = document.getElementById("ph-wish-btn");
+      let wished = false;
+      wishBtn.addEventListener("click", () => {
+        wished = !wished;
+        wishBtn.textContent = wished ? "❤️ Wishlisted" : "🤍 Wishlist";
+        if (window.opener) {
+          window.opener.postMessage({ type: "TOGGLE_WISHLIST", productId: p.id }, "*");
+        }
+      });
+
+      /* Star picker */
+      let selectedStars = 0;
+      document.querySelectorAll(".ph-star").forEach(star => {
+        star.addEventListener("click", () => {
+          selectedStars = parseInt(star.dataset.star);
+          document.querySelectorAll(".ph-star").forEach((s, i) => {
+            s.classList.toggle("selected", i < selectedStars);
+          });
+        });
+        star.addEventListener("mouseover", () => {
+          const n = parseInt(star.dataset.star);
+          document.querySelectorAll(".ph-star").forEach((s, i) => {
+            s.style.color = i < n ? "#C8A84B" : "#E3D9CC";
+          });
+        });
+        star.addEventListener("mouseout", () => {
+          document.querySelectorAll(".ph-star").forEach((s, i) => {
+            s.style.color = i < selectedStars ? "#C8A84B" : "#E3D9CC";
+          });
+        });
+      });
+
+      /* Submit review */
+      document.getElementById("ph-submit-btn").addEventListener("click", () => {
+        const name   = document.getElementById("r-name").value.trim();
+        const email  = document.getElementById("r-email").value.trim();
+        const text   = document.getElementById("r-text").value.trim();
+        const size   = document.getElementById("r-size").value;
+        const colour = document.getElementById("r-colour").value;
+        const errEl  = document.getElementById("ph-error");
+        const sucEl  = document.getElementById("ph-success");
+
+        errEl.classList.add("hidden");
+        sucEl.classList.add("hidden");
+
+        if (!name)          { errEl.textContent = "Please enter your name.";      errEl.classList.remove("hidden"); return; }
+        if (!email)         { errEl.textContent = "Please enter your email.";     errEl.classList.remove("hidden"); return; }
+        if (!selectedStars) { errEl.textContent = "Please select a star rating."; errEl.classList.remove("hidden"); return; }
+        if (!text)          { errEl.textContent = "Please write your review.";    errEl.classList.remove("hidden"); return; }
+
+        const review = {
+          author:   name,
+          stars:    selectedStars,
+          date:     new Date().toLocaleDateString("en-GB", { day:"numeric", month:"short", year:"numeric" }),
+          size, colour,
+          verified: false,
+          text
+        };
+
+        /* Add card to page immediately */
+        const card = document.createElement("div");
+        card.className = "ph-review-card";
+        card.style.border = "1.5px solid #E8F5E9";
+        card.innerHTML = `
+          <div class="ph-review-top">
+            <span class="ph-review-author">${review.author}</span>
+            <span class="ph-review-date">${review.date}</span>
+          </div>
+          <div class="ph-review-stars">${"★".repeat(review.stars)}${"☆".repeat(5-review.stars)}</div>
+          <div class="ph-review-text">${review.text}</div>
+          ${(review.size||review.colour) ? `<div class="ph-review-purchase">Purchased: ${[review.size,review.colour].filter(Boolean).join(" / ")}</div>` : ""}
+        `;
+        document.getElementById("ph-review-list").prepend(card);
+
+        /* Post to parent window */
+        if (window.opener) {
+          window.opener.postMessage({ type: "NEW_REVIEW", productId: p.id, review }, "*");
+        }
+
+        /* Reset form */
+        document.getElementById("r-name").value   = "";
+        document.getElementById("r-email").value  = "";
+        document.getElementById("r-text").value   = "";
+        document.getElementById("r-size").value   = "";
+        document.getElementById("r-colour").value = "";
+        selectedStars = 0;
+        document.querySelectorAll(".ph-star").forEach(s => { s.classList.remove("selected"); s.style.color = ""; });
+        sucEl.classList.remove("hidden");
+        setTimeout(() => sucEl.classList.add("hidden"), 4000);
+      });
+    }
+  </script>
+</body>
+</html>
