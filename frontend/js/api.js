@@ -4,7 +4,7 @@
    server instances running on Render.
    ════════════════════════════════════════════════ */
 window.API = (() => {
-  //const BASE_URL = "https://hearth-co.onrender.com/api";
+  const BASE_URL = "https://hearth-co.onrender.com/api";
   
   // 🌟 FIX: Instantly restore your admin authentication token across page reloads
   let adminToken = localStorage.getItem("admin_token") || null;
